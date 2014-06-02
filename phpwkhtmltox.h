@@ -21,8 +21,13 @@ ZEND_END_MODULE_GLOBALS(phpwkhtmltox)
 
 PHP_FUNCTION(wkhtmltox_convert);
 
+struct wkhtmltopdf_converter;
+typedef struct wkhtmltopdf_converter wkhtmltopdf_converter;
 typedef int (*fp)(void *settings, const char *name, const char *value);
-void wkhtmltox_set_params(void *settings, fp set_function, zval *params);
+typedef void(*wkhtmltopdf_str_callback)(wkhtmltopdf_converter *c, const char *msg);
+int wkhtmltox_set_params(void *settings, fp set_function, zval *params, zval *input);
+void wkhtmltox_warning(wkhtmltopdf_converter *c, const char *msg);
+void wkhtmltox_error(wkhtmltopdf_converter *c, const char *msg);
 
 extern zend_module_entry phpwkhtmltox_module_entry;
 #define phpext_phpwkhtmltox_ptr &phpwkhtmltox_module_entry
